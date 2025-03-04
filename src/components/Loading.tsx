@@ -6,8 +6,8 @@ const Loading = () => {
   const [progress, setProgress] = useState(0);
   const [hidden, setHidden] = useState(false);
   
-  // Japanese for "Loading"
-  const loadingText = "読み込み中";
+  // English word with Japanese-style font
+  const loadingText = "LOADING";
 
   useEffect(() => {
     // Simulate loading progress with smoother increment
@@ -46,7 +46,7 @@ const Loading = () => {
         >
           <div className="flex flex-col items-center justify-center text-white">
             <motion.div 
-              className="text-5xl font-light mb-12"
+              className="text-7xl font-bold mb-12 tracking-widest font-brushFont"
               initial={{ opacity: 0, y: 20 }}
               animate={{ 
                 opacity: 1, 
@@ -56,6 +56,13 @@ const Loading = () => {
                   ease: [0.16, 1, 0.3, 1],
                   delay: 0.2
                 }
+              }}
+              style={{
+                textShadow: '0 0 15px rgba(255,255,255,0.5)',
+                letterSpacing: '0.1em',
+                fontFamily: '"Bungee Shade", "Zen Antique", sans-serif',
+                fontWeight: 400,
+                transform: 'scale(1, 0.9)'
               }}
             >
               {loadingText}

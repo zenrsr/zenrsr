@@ -106,6 +106,7 @@ export default {
       fontFamily: {
         sans: ['Inter var', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
+        brushFont: ['Bungee Shade', 'Zen Antique', 'cursive'],
       },
       transitionTimingFunction: {
         'in-expo': 'cubic-bezier(0.16, 1, 0.3, 1)',

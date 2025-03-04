@@ -193,6 +193,12 @@
     pointer-events: none;
   }
   
+  /* Font for loading screen */
+  .font-brushFont {
+    font-family: 'Bungee Shade', 'Zen Antique', cursive;
+    font-display: block;
+  }
+  
   /* Enhanced scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
@@ -226,3 +232,4 @@
 /* Import fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Zen+Antique&display=swap');
