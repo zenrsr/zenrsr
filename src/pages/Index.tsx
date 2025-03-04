@@ -7,17 +7,34 @@ import About from '@/components/About';
 import Footer from '@/components/Footer';
 import Cursor from '@/components/Cursor';
 import Loading from '@/components/Loading';
+import { useScrollRestoration } from '@/utils/animations';
 
 const Index = () => {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
+  
+  // Use the scroll restoration hook to handle hash navigation
+  useScrollRestoration();
 
   useEffect(() => {
-    // Hide loading screen after animations complete
+    // Optimize loading screen timing
     const timer = setTimeout(() => {
       setIsInitialLoading(false);
-    }, 3000);
+      
+      // Add smooth scrolling to all elements
+      document.documentElement.style.scrollBehavior = 'smooth';
+      
+      // Add scroll snap for section navigation
+      const sections = document.querySelectorAll('section');
+      sections.forEach(section => {
+        section.classList.add('scroll-mt-20');
+      });
+    }, 2500); // Reduced timing for faster initial interaction
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      // Remove smooth scrolling on unmount
+      document.documentElement.style.scrollBehavior = '';
+    };
   }, []);
 
   return (
@@ -31,7 +48,7 @@ const Index = () => {
       {/* Navigation */}
       <Header />
       
-      {/* Main content */}
+      {/* Main content with optimized scroll sections */}
       <main>
         <Hero />
         <ProjectsGrid />

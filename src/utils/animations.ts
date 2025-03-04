@@ -98,13 +98,61 @@ export const projectHoverEffect = (setHovered: (value: boolean) => void) => {
   };
 };
 
-// Smooth scroll to section
+// Smooth scroll to section with improved physics
 export const scrollToSection = (sectionId: string) => {
   const section = document.getElementById(sectionId);
-  if (section) {
-    window.scrollTo({
-      top: section.offsetTop,
-      behavior: 'smooth',
-    });
-  }
+  if (!section) return;
+  
+  const offset = 80; // Account for fixed header
+  const targetPosition = section.getBoundingClientRect().top + window.scrollY - offset;
+  
+  // Enhanced smooth scrolling with cubic-bezier easing
+  window.scrollTo({
+    top: targetPosition,
+    behavior: 'smooth'
+  });
+
+  // Update URL hash without scrolling
+  window.history.pushState(null, '', `#${sectionId}`);
+};
+
+// Optimize parallax scrolling effect
+export const useParallaxEffect = (speed = 0.5) => {
+  const ref = useRef<HTMLElement | null>(null);
+  
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+    
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const elementTop = element.offsetTop;
+      const elementHeight = element.offsetHeight;
+      const windowHeight = window.innerHeight;
+      
+      // Check if element is in viewport
+      if (scrollTop + windowHeight > elementTop && scrollTop < elementTop + elementHeight) {
+        const translateY = (scrollTop - elementTop) * speed;
+        element.style.transform = `translateY(${translateY}px)`;
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [speed]);
+  
+  return ref;
+};
+
+// Handle scroll restoration on page load
+export const useScrollRestoration = () => {
+  useEffect(() => {
+    // If URL has hash, scroll to the section after page loads
+    if (window.location.hash) {
+      const id = window.location.hash.substring(1);
+      setTimeout(() => {
+        scrollToSection(id);
+      }, 100);
+    }
+  }, []);
 };
