@@ -1,12 +1,45 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { useEffect, useState } from 'react';
+import Header from '@/components/Header';
+import Hero from '@/components/Hero';
+import ProjectsGrid from '@/components/ProjectsGrid';
+import About from '@/components/About';
+import Footer from '@/components/Footer';
+import Cursor from '@/components/Cursor';
+import Loading from '@/components/Loading';
 
 const Index = () => {
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+
+  useEffect(() => {
+    // Hide loading screen after animations complete
+    const timer = setTimeout(() => {
+      setIsInitialLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="relative">
+      {/* Loading screen */}
+      <Loading />
+      
+      {/* Custom cursor */}
+      <Cursor />
+      
+      {/* Navigation */}
+      <Header />
+      
+      {/* Main content */}
+      <main>
+        <Hero />
+        <ProjectsGrid />
+        <About />
+      </main>
+      
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
