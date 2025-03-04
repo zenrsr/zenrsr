@@ -1,179 +1,171 @@
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { scrollToSection } from "@/utils/animations";
+import { Link } from "react-router-dom";
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { scrollToSection } from '@/utils/animations';
-import Button from './common/Button';
-import { Link } from 'react-router-dom';
+// Add line animation variants
+const lineVariants = {
+  open: {
+    rotate: 45,
+    y: 0,
+    width: "24px",
+    transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
+  },
+  closed: {
+    rotate: 0,
+    y: -4,
+    width: "24px",
+    transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
+const lineVariants2 = {
+  open: {
+    rotate: -45,
+    y: 0,
+    width: "24px",
+    transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
+  },
+  closed: {
+    rotate: 0,
+    y: 4,
+    width: "24px",
+    transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
+// Add navigation items
+const navItems = [
+  { label: "Home", path: "/", section: "hero" },
+  { label: "Projects", path: "/projects", section: "projects" },
+  { label: "About", path: "/", section: "about" },
+  { label: "Contact", path: "/", section: "contact" },
+];
+
+// // Add close button variants
+// const closeButtonVariants = {
+//   initial: { scale: 0.8, opacity: 0 },
+//   animate: { scale: 1, opacity: 1 },
+//   exit: { scale: 0.8, opacity: 0 },
+//   hover: { scale: 1.1 },
+// };
 
 const MenuButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       setIsScrolled(scrollTop > 50);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isOpen && event.target instanceof Element) {
+        const navElement = document.querySelector(".fixed.inset-0");
+        const menuButton = document.querySelector("button[aria-label]");
 
-  // Navigation items
-  const navItems = [
-    { label: 'Home', path: '/', section: 'hero' },
-    { label: 'Projects', path: '/projects', section: 'projects' },
-    { label: 'About', path: '/', section: 'about' },
-    { label: 'Contact', path: '/', section: 'contact' }
-  ];
-
-  // Handle navigation click for same page sections
+        if (
+          navElement &&
+          !navElement.contains(event.target) &&
+          menuButton &&
+          !menuButton.contains(event.target)
+        ) {
+          setIsOpen(false);
+        }
+      }
+    };
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (isOpen && event.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscapeKey);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscapeKey);
+    };
+  }, [isOpen]);
   const handleNavClick = (path: string, sectionId: string) => {
     setIsOpen(false);
-    
+
     if (window.location.pathname === path) {
       scrollToSection(sectionId);
     }
   };
 
-  // Menu button variants for animation
-  const buttonVariants = {
-    closed: {
-      rotate: 0
-    },
-    open: {
-      rotate: 90
-    }
-  };
-
-  // Line variants for animation
-  const lineVariants = {
-    closed: {
-      rotate: 0
-    },
-    open: {
-      rotate: 45
-    }
-  };
-
-  const lineVariants2 = {
-    closed: {
-      rotate: 0
-    },
-    open: {
-      rotate: -45
-    }
-  };
-
-  // Menu variants for animation
-  const menuVariants = {
-    closed: {
-      opacity: 0,
-      y: -20,
-      transition: {
-        type: "tween",
-        duration: 0.5,
-        ease: [0.16, 1, 0.3, 1]
-      }
-    },
-    open: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "tween", 
-        duration: 0.5,
-        ease: [0.16, 1, 0.3, 1]
-      }
-    }
-  };
-
   return (
-    <>
-      {/* Stylish menu button */}
-      <div 
-        className={`fixed top-0 right-0 z-50 px-6 py-6 transition-colors ${
-          isScrolled || isOpen ? 'text-foreground' : 'text-foreground'
-        }`}
+    <div className="fixed top-0 right-0 z-[60] p-4">
+      <motion.button
+        className="flex flex-col items-center justify-center w-12 h-12 relative interactive cursor-none group"
+        onClick={() => setIsOpen(!isOpen)}
+        animate={isOpen ? "open" : "closed"}
+        aria-label={isOpen ? "Close menu" : "Open menu"}
+        data-cursor="pointer"
       >
-        <motion.button
-          className="flex flex-col items-center justify-center w-12 h-12 relative interactive"
-          onClick={() => setIsOpen(!isOpen)}
-          animate={isOpen ? "open" : "closed"}
-          variants={buttonVariants}
-          aria-label={isOpen ? "Close menu" : "Open menu"}
-        >
-          <div className="w-12 h-12 flex items-center justify-center relative">
-            <motion.div 
-              className="absolute w-6 h-px bg-current"
-              variants={lineVariants}
-            />
-            <motion.div 
-              className="absolute w-6 h-px bg-current"
-              variants={lineVariants2}
-            />
-          </div>
-        </motion.button>
-      </div>
+        <div className="w-12 h-12 flex items-center justify-center relative">
+          <motion.div
+            className="absolute h-[2.5px] w-6 bg-current"
+            style={{
+              top: "calc(50% - 1.25px)",
+              left: "50%",
+              transform: "translateX(-50%)",
+              transformOrigin: "center",
+            }}
+            variants={lineVariants}
+          />
+          <motion.div
+            className="absolute h-[2.5px] w-6 bg-current"
+            style={{
+              top: "calc(50% - 1.25px)",
+              left: "50%",
+              transform: "translateX(-50%)",
+              transformOrigin: "center",
+            }}
+            variants={lineVariants2}
+          />
+        </div>
+      </motion.button>
 
-      {/* Logo */}
-      <div className={`fixed top-0 left-0 z-50 py-6 px-6 transition-colors ${
-        isScrolled || isOpen ? 'text-foreground' : 'text-foreground'
-      }`}>
-        <Link 
-          to="/" 
-          className="text-xl font-medium tracking-tight interactive"
-          onClick={() => {
-            setIsOpen(false);
-            if (window.location.pathname === '/') {
-              scrollToSection('hero');
-            }
-          }}
-        >
-          Portfolio
-        </Link>
-      </div>
-
-      {/* Fullscreen menu overlay */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div 
-            className="fixed inset-0 z-40 bg-background/90 backdrop-blur-lg flex items-center justify-center"
-            initial="closed"
-            animate="open"
-            exit="closed"
-            variants={menuVariants}
+          <motion.nav
+            className="fixed inset-0 bg-background/95 backdrop-blur-sm z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
           >
-            <div className="w-full max-w-7xl mx-auto px-6">
-              <div className="flex flex-col items-center justify-center h-full py-20">
-                <nav className="flex flex-col items-center space-y-8">
-                  {navItems.map((item) => (
+            <div className="container mx-auto h-full flex items-center justify-center relative z-50">
+              <ul className="space-y-8 text-center">
+                {navItems.map((item) => (
+                  <motion.li
+                    key={item.label}
+                    className="interactive cursor-none"
+                    whileHover={{ scale: 1.05 }}
+                  >
                     <Link
-                      key={item.section}
                       to={item.path}
                       onClick={() => handleNavClick(item.path, item.section)}
-                      className="text-4xl md:text-5xl font-medium tracking-tight hover:text-primary transition-colors duration-300 interactive"
+                      className="text-2xl md:text-3xl font-medium inline-flex items-center group"
                     >
-                      {item.label}
+                      <span className="relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 group-hover:after:scale-x-100 group-hover:after:origin-bottom-left">
+                        {item.label}
+                      </span>
                     </Link>
-                  ))}
-                  <div className="pt-8">
-                    <Button 
-                      onClick={() => handleNavClick('/', 'contact')} 
-                      variant="primary" 
-                      size="lg"
-                      withArrow
-                    >
-                      Get in Touch
-                    </Button>
-                  </div>
-                </nav>
-              </div>
+                  </motion.li>
+                ))}
+              </ul>
             </div>
-          </motion.div>
+          </motion.nav>
         )}
       </AnimatePresence>
-    </>
+    </div>
   );
 };
 

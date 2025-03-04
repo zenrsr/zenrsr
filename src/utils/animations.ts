@@ -1,5 +1,4 @@
-
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from "react";
 
 // Animation states
 export const useAnimationOnView = (threshold = 0.2) => {
@@ -16,7 +15,7 @@ export const useAnimationOnView = (threshold = 0.2) => {
           observer.disconnect();
         }
       },
-      { threshold, rootMargin: '20px' }
+      { threshold, rootMargin: "20px" }
     );
 
     observer.observe(ref.current);
@@ -32,7 +31,10 @@ export const useAnimationOnView = (threshold = 0.2) => {
 };
 
 // Staggered animation for multiple items
-export const useStaggeredAnimation = (itemCount: number, staggerDelay = 0.1) => {
+export const useStaggeredAnimation = (
+  itemCount: number,
+  staggerDelay = 0.1
+) => {
   return Array.from({ length: itemCount }).map((_, index) => ({
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -56,26 +58,26 @@ export const useMagneticEffect = () => {
       const { left, top, width, height } = element.getBoundingClientRect();
       const x = e.clientX - left;
       const y = e.clientY - top;
-      
+
       const centerX = width / 2;
       const centerY = height / 2;
-      
-      const deltaX = (x - centerX) / (width / 2) * 15;
-      const deltaY = (y - centerY) / (height / 2) * 15;
-      
+
+      const deltaX = ((x - centerX) / (width / 2)) * 15;
+      const deltaY = ((y - centerY) / (height / 2)) * 15;
+
       element.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
     };
-    
+
     const handleMouseLeave = () => {
-      element.style.transform = 'translate(0, 0)';
+      element.style.transform = "translate(0, 0)";
     };
-    
-    element.addEventListener('mousemove', handleMouseMove);
-    element.addEventListener('mouseleave', handleMouseLeave);
-    
+
+    element.addEventListener("mousemove", handleMouseMove);
+    element.addEventListener("mouseleave", handleMouseLeave);
+
     return () => {
-      element.removeEventListener('mousemove', handleMouseMove);
-      element.removeEventListener('mouseleave', handleMouseLeave);
+      element.removeEventListener("mousemove", handleMouseMove);
+      element.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, []);
 
@@ -93,26 +95,26 @@ export const pageTransition = {
 // Use this hook to handle page transitions
 export const usePageTransition = () => {
   const [isTransitioning, setIsTransitioning] = useState(true);
-  
+
   useEffect(() => {
     // Simulate entry transition
     const timer = setTimeout(() => {
       setIsTransitioning(false);
     }, 800);
-    
+
     // Handle navigation events
     const handleBeforeUnload = () => {
       setIsTransitioning(true);
     };
-    
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
     return () => {
       clearTimeout(timer);
-      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, []);
-  
+
   return { isTransitioning, setIsTransitioning };
 };
 
@@ -125,57 +127,64 @@ export const projectHoverEffect = (setHovered: (value: boolean) => void) => {
 };
 
 // Enhanced smooth scroll to section with improved physics
+interface CustomElement extends Element {
+  __locomotiveScroll?: LocomotiveScroll;
+}
+
 export const scrollToSection = (sectionId: string) => {
   const section = document.getElementById(sectionId);
   if (!section) return;
-  
-  const offset = 80; // Account for fixed header
-  const targetPosition = section.getBoundingClientRect().top + window.scrollY - offset;
-  
-  // Enhanced smooth scrolling with cubic-bezier easing
-  window.scrollTo({
-    top: targetPosition,
-    behavior: 'smooth'
+
+  // Use native smooth scrolling
+  section.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start',
+    inline: 'nearest'
   });
 
   // Update URL hash without scrolling
-  window.history.pushState(null, '', `#${sectionId}`);
+  window.history.pushState(null, "", `#${sectionId}`);
 };
 
-// Optimize parallax scrolling effect
+// Remove or comment out the following functions as they're no longer needed:
+// - useScrollRestoration
+// - smoothScroll
+// - useParallaxEffect (if you want to keep parallax, you can use locomotive-scroll's built-in parallax)
 export const useParallaxEffect = (speed = 0.5) => {
   const ref = useRef<HTMLElement | null>(null);
-  
+
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
-    
+
     // Use requestAnimationFrame for better performance
     let rafId: number;
-    
+
     const handleScroll = () => {
       rafId = requestAnimationFrame(() => {
         const scrollTop = window.scrollY;
         const elementTop = element.offsetTop;
         const elementHeight = element.offsetHeight;
         const windowHeight = window.innerHeight;
-        
+
         // Check if element is in viewport with expanded range
-        if (scrollTop + windowHeight > elementTop - 100 && 
-            scrollTop < elementTop + elementHeight + 100) {
+        if (
+          scrollTop + windowHeight > elementTop - 100 &&
+          scrollTop < elementTop + elementHeight + 100
+        ) {
           const translateY = (scrollTop - elementTop) * speed;
           element.style.transform = `translateY(${translateY}px)`;
         }
       });
     };
-    
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
       cancelAnimationFrame(rafId);
     };
   }, [speed]);
-  
+
   return ref;
 };
 
@@ -196,23 +205,23 @@ export const useScrollRestoration = () => {
       // Only intercept high-velocity scrolls for smoother experience
       if (Math.abs(e.deltaY) > 60) {
         e.preventDefault();
-        
+
         const scrollStep = e.deltaY > 0 ? 100 : -100;
         window.scrollBy({
           top: scrollStep,
-          behavior: 'smooth'
+          behavior: "smooth",
         });
       }
     };
-    
+
     // Only apply custom scroll to large displays
     if (window.innerWidth > 1024) {
-      window.addEventListener('wheel', smoothScroll, { passive: false });
+      window.addEventListener("wheel", smoothScroll, { passive: false });
     }
-    
+
     return () => {
       if (window.innerWidth > 1024) {
-        window.removeEventListener('wheel', smoothScroll);
+        window.removeEventListener("wheel", smoothScroll);
       }
     };
   }, []);
@@ -221,30 +230,30 @@ export const useScrollRestoration = () => {
 // Text splitting animation for enhanced typography
 export const useTextSplitting = (text: string, delay = 0.03) => {
   const ref = useRef<HTMLElement | null>(null);
-  
+
   useEffect(() => {
     const element = ref.current;
     if (!element || !text) return;
-    
-    element.innerHTML = '';
-    
+
+    element.innerHTML = "";
+
     // Split text into individual spans for animation
     [...text].forEach((char, index) => {
-      const span = document.createElement('span');
-      span.innerText = char === ' ' ? '\u00A0' : char; // Preserve spaces
-      span.style.opacity = '0';
-      span.style.transform = 'translateY(20px)';
-      span.style.display = 'inline-block';
+      const span = document.createElement("span");
+      span.innerText = char === " " ? "\u00A0" : char; // Preserve spaces
+      span.style.opacity = "0";
+      span.style.transform = "translateY(20px)";
+      span.style.display = "inline-block";
       span.style.transition = `all 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${index * delay}s`;
       element.appendChild(span);
-      
+
       // Trigger animation after a slight delay
       setTimeout(() => {
-        span.style.opacity = '1';
-        span.style.transform = 'translateY(0)';
+        span.style.opacity = "1";
+        span.style.transform = "translateY(0)";
       }, 50);
     });
   }, [text, delay]);
-  
+
   return ref;
 };
