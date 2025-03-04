@@ -2,6 +2,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { useAnimationOnView } from '@/utils/animations';
+import { Link } from 'react-router-dom';
+import Button from './common/Button';
 
 // Mock project data
 const projects = [
@@ -62,7 +64,18 @@ const ProjectsGrid = () => {
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
         <div className={`mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-8'}`}>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium mb-6">Featured Projects</h2>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-6">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium">Featured Projects</h2>
+            <Link 
+              to="/projects" 
+              className="text-base md:text-lg font-medium mt-4 md:mt-0 inline-flex items-center group"
+            >
+              <span className="relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 group-hover:after:scale-x-100 group-hover:after:origin-bottom-left">
+                All Projects
+              </span>
+              <ArrowUpRight className="ml-1 w-4 h-4 transform transition-transform group-hover:translate-x-1 group-hover:translate-y-[-2px]" />
+            </Link>
+          </div>
           <p className="text-muted-foreground max-w-2xl">
             A showcase of my work across various domains, demonstrating my technical expertise and problem-solving abilities.
           </p>
@@ -113,6 +126,18 @@ const ProjectsGrid = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Mobile view All Projects button */}
+        <div className="mt-16 text-center md:hidden">
+          <Button 
+            onClick={() => window.location.href = '/projects'} 
+            variant="secondary"
+            withArrow
+            className="min-w-[160px]"
+          >
+            All Projects
+          </Button>
         </div>
       </div>
     </section>

@@ -11,6 +11,7 @@ import { useScrollRestoration } from '@/utils/animations';
 
 const Index = () => {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [isPageTransitioning, setIsPageTransitioning] = useState(true);
   
   // Use the scroll restoration hook to handle hash navigation
   useScrollRestoration();
@@ -28,6 +29,11 @@ const Index = () => {
       sections.forEach(section => {
         section.classList.add('scroll-mt-20');
       });
+      
+      // Handle page transition
+      setTimeout(() => {
+        setIsPageTransitioning(false);
+      }, 200);
     }, 2500); // Reduced timing for faster initial interaction
 
     return () => {
@@ -37,8 +43,42 @@ const Index = () => {
     };
   }, []);
 
+  // Monitor link clicks for page transitions
+  useEffect(() => {
+    const handleLinkClick = (e: MouseEvent) => {
+      const target = e.target as Element;
+      const isLink = target.tagName === 'A' || target.closest('a');
+      
+      if (isLink && (target as HTMLAnchorElement).hostname === window.location.hostname) {
+        e.preventDefault();
+        const href = (target as HTMLAnchorElement).href || (target.closest('a') as HTMLAnchorElement).href;
+        
+        // Don't transition for hash links (same-page navigation)
+        if (href.includes('#') && !href.includes('//')) return;
+        
+        // Show transition overlay
+        setIsPageTransitioning(true);
+        
+        // Navigate after transition effect
+        setTimeout(() => {
+          window.location.href = href;
+        }, 800);
+      }
+    };
+    
+    document.addEventListener('click', handleLinkClick);
+    return () => document.removeEventListener('click', handleLinkClick);
+  }, []);
+
   return (
     <div className="relative">
+      {/* Page transition overlay */}
+      <div 
+        className={`fixed inset-0 bg-background z-50 pointer-events-none transition-opacity duration-1000 ${
+          isPageTransitioning ? 'opacity-100' : 'opacity-0'
+        }`} 
+      />
+      
       {/* Loading screen */}
       <Loading />
       

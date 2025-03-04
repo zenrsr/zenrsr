@@ -140,22 +140,22 @@ const Hero = () => {
             About Me
           </Button>
         </div>
-
-        {/* Enhanced scroll indicator with clear interaction cues */}
-        <button 
-          onClick={handleScrollClick}
-          className={`absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center transition-all duration-1000 cursor-none group ${
-            isLoaded ? 'opacity-70' : 'opacity-0'
-          }`}
-          style={{ transitionDelay: '0.8s' }}
-          aria-label="Scroll to projects"
-        >
-          <span className="text-xs uppercase tracking-widest mb-2 group-hover:text-primary transition-colors">Scroll</span>
-          <div className="w-8 h-12 border-2 border-foreground/30 rounded-full flex items-start justify-center p-1 overflow-hidden group-hover:border-primary/50 transition-colors">
-            <div className="w-1 h-2 bg-foreground/50 rounded-full animate-[bounce_1.5s_infinite] group-hover:bg-primary transition-colors" />
-          </div>
-        </button>
       </div>
+
+      {/* Enhanced scroll indicator at the bottom of the hero section */}
+      <button 
+        onClick={handleScrollClick}
+        className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center transition-all duration-1000 cursor-none group ${
+          isLoaded ? 'opacity-70' : 'opacity-0'
+        }`}
+        style={{ transitionDelay: '0.8s' }}
+        aria-label="Scroll to projects"
+      >
+        <span className="text-xs uppercase tracking-widest mb-2 group-hover:text-primary transition-colors">Scroll</span>
+        <div className="w-8 h-12 border-2 border-foreground/30 rounded-full flex items-start justify-center p-1 overflow-hidden group-hover:border-primary/50 transition-colors">
+          <div className="w-1 h-2 bg-foreground/50 rounded-full animate-[bounce_1.5s_infinite] group-hover:bg-primary transition-colors" />
+        </div>
+      </button>
     </section>
   );
 };

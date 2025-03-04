@@ -16,7 +16,7 @@ export const useAnimationOnView = (threshold = 0.2) => {
           observer.disconnect();
         }
       },
-      { threshold }
+      { threshold, rootMargin: '20px' }
     );
 
     observer.observe(ref.current);
@@ -82,12 +82,38 @@ export const useMagneticEffect = () => {
   return ref;
 };
 
-// Page transition animation
+// Enhanced page transition animation
 export const pageTransition = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },
   exit: { opacity: 0 },
-  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+};
+
+// Use this hook to handle page transitions
+export const usePageTransition = () => {
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  
+  useEffect(() => {
+    // Simulate entry transition
+    const timer = setTimeout(() => {
+      setIsTransitioning(false);
+    }, 800);
+    
+    // Handle navigation events
+    const handleBeforeUnload = () => {
+      setIsTransitioning(true);
+    };
+    
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+  
+  return { isTransitioning, setIsTransitioning };
 };
 
 // Hover effect for project cards
@@ -98,7 +124,7 @@ export const projectHoverEffect = (setHovered: (value: boolean) => void) => {
   };
 };
 
-// Smooth scroll to section with improved physics
+// Enhanced smooth scroll to section with improved physics
 export const scrollToSection = (sectionId: string) => {
   const section = document.getElementById(sectionId);
   if (!section) return;
@@ -124,35 +150,101 @@ export const useParallaxEffect = (speed = 0.5) => {
     const element = ref.current;
     if (!element) return;
     
+    // Use requestAnimationFrame for better performance
+    let rafId: number;
+    
     const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const elementTop = element.offsetTop;
-      const elementHeight = element.offsetHeight;
-      const windowHeight = window.innerHeight;
-      
-      // Check if element is in viewport
-      if (scrollTop + windowHeight > elementTop && scrollTop < elementTop + elementHeight) {
-        const translateY = (scrollTop - elementTop) * speed;
-        element.style.transform = `translateY(${translateY}px)`;
-      }
+      rafId = requestAnimationFrame(() => {
+        const scrollTop = window.scrollY;
+        const elementTop = element.offsetTop;
+        const elementHeight = element.offsetHeight;
+        const windowHeight = window.innerHeight;
+        
+        // Check if element is in viewport with expanded range
+        if (scrollTop + windowHeight > elementTop - 100 && 
+            scrollTop < elementTop + elementHeight + 100) {
+          const translateY = (scrollTop - elementTop) * speed;
+          element.style.transform = `translateY(${translateY}px)`;
+        }
+      });
     };
     
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      cancelAnimationFrame(rafId);
+    };
   }, [speed]);
   
   return ref;
 };
 
-// Handle scroll restoration on page load
+// Enhanced scroll restoration on page load
 export const useScrollRestoration = () => {
   useEffect(() => {
     // If URL has hash, scroll to the section after page loads
     if (window.location.hash) {
       const id = window.location.hash.substring(1);
+      // Increased delay for more reliable scrolling after page load
       setTimeout(() => {
         scrollToSection(id);
-      }, 100);
+      }, 200);
     }
+
+    // Improved scroll behavior
+    const smoothScroll = (e: WheelEvent) => {
+      // Only intercept high-velocity scrolls for smoother experience
+      if (Math.abs(e.deltaY) > 60) {
+        e.preventDefault();
+        
+        const scrollStep = e.deltaY > 0 ? 100 : -100;
+        window.scrollBy({
+          top: scrollStep,
+          behavior: 'smooth'
+        });
+      }
+    };
+    
+    // Only apply custom scroll to large displays
+    if (window.innerWidth > 1024) {
+      window.addEventListener('wheel', smoothScroll, { passive: false });
+    }
+    
+    return () => {
+      if (window.innerWidth > 1024) {
+        window.removeEventListener('wheel', smoothScroll);
+      }
+    };
   }, []);
+};
+
+// Text splitting animation for enhanced typography
+export const useTextSplitting = (text: string, delay = 0.03) => {
+  const ref = useRef<HTMLElement | null>(null);
+  
+  useEffect(() => {
+    const element = ref.current;
+    if (!element || !text) return;
+    
+    element.innerHTML = '';
+    
+    // Split text into individual spans for animation
+    [...text].forEach((char, index) => {
+      const span = document.createElement('span');
+      span.innerText = char === ' ' ? '\u00A0' : char; // Preserve spaces
+      span.style.opacity = '0';
+      span.style.transform = 'translateY(20px)';
+      span.style.display = 'inline-block';
+      span.style.transition = `all 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${index * delay}s`;
+      element.appendChild(span);
+      
+      // Trigger animation after a slight delay
+      setTimeout(() => {
+        span.style.opacity = '1';
+        span.style.transform = 'translateY(0)';
+      }, 50);
+    });
+  }, [text, delay]);
+  
+  return ref;
 };
