@@ -8,36 +8,40 @@ import Button from "./common/Button";
 const projects = [
   {
     id: 1,
-    title: "E-Commerce Platform",
-    category: "Full Stack Development",
-    image:
-      "https://images.unsplash.com/photo-1661956602944-249bcd04b63f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    title: "CORN-AI PROJECT",
+    category: "AI SAAS Product",
+    image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    description: "JavaScript-based AI ecosystem with GPT-4 integration, Stripe payments, and real-time dashboard using Pusher WebSockets. Achieved 95% code reusability.",
     url: "#",
+    year: "2024"
   },
   {
     id: 2,
-    title: "Banking Dashboard",
-    category: "Frontend Development",
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    title: "APEXIA FINANCIAL APP",
+    category: "Fintech Application",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    description: "Banking app with Plaid API integration, optimized JavaScript algorithms boosting transaction speed by 30%, and Sentry monitoring implementation.",
     url: "#",
+    year: "2024"
   },
   {
     id: 3,
-    title: "Mobile Payment App",
-    category: "React Native",
-    image:
-      "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    title: "PODVERSE AI",
+    category: "Podcast Application",
+    image: "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    description: "JavaScript/Node.js podcast app with OpenAI Text-to-Speech integration and ClerkJS authentication. Successfully resolved 20+ user-reported issues.",
     url: "#",
+    year: "2024"
   },
   {
     id: 4,
-    title: "AI Content Generator",
-    category: "Machine Learning",
-    image:
-      "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    title: "MILAAP WORKSPACE",
+    category: "Team Collaboration Platform",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    description: "Slack-inspired platform using WebSockets and GSAP animations. Implemented responsive UI with Spline 3D, improving team efficiency by 25%.",
     url: "#",
-  },
+    year: "2024"
+  }
 ];
 
 const ProjectsGrid = () => {

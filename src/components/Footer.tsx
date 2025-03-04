@@ -15,18 +15,16 @@ const Footer = () => {
   });
 
   const y = useTransform(scrollYProgress, [0, 1], [100, 0]);
-
   // Social links
   const socialLinks = [
-    { icon: <Github className="h-5 w-5" />, label: "GitHub", url: "#" },
-    { icon: <Linkedin className="h-5 w-5" />, label: "LinkedIn", url: "#" },
+    { icon: <Github className="h-5 w-5" />, label: "GitHub", url: "https://github.com/zenrsr" },
+    { icon: <Linkedin className="h-5 w-5" />, label: "LinkedIn", url: "https://www.linkedin.com/in/raga-sandeep-reddy-bobba" },
     {
       icon: <Mail className="h-5 w-5" />,
       label: "Email",
-      url: "mailto:contact@example.com",
+      url: "mailto:zenrsrdev@gmail.com",
     },
   ];
-
   // Form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +32,6 @@ const Footer = () => {
     alert(`Thanks for your message! I'll get back to you soon.`);
     setEmailValue("");
   };
-
   return (
     <motion.footer
       id="contact"
@@ -57,11 +54,9 @@ const Footer = () => {
             </h2>
 
             <p className="text-lg mb-12 text-primary-foreground/80 max-w-lg">
-              I'm currently available for freelance work and full-time
-              opportunities. If you're interested in working together, let's
-              connect!
+              Full Stack Generalist specializing in JavaScript and modern web technologies. 
+              Looking forward to discussing potential collaborations and opportunities.
             </p>
-
             <div className="flex flex-col sm:flex-row gap-8">
               {socialLinks.map((link, index) => (
                 <a
@@ -155,7 +150,7 @@ const Footer = () => {
         <div
           className={`mt-24 pt-12 border-t border-primary-foreground/20 text-center text-primary-foreground/70 text-sm transition-all duration-1000 ${isVisible ? "opacity-100" : "opacity-0"}`}
         >
-          <p>© {new Date().getFullYear()} Portfolio. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} B. Raga Sandeep Reddy. All rights reserved.</p>
         </div>
       </div>
     </motion.footer>
