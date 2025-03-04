@@ -4,6 +4,7 @@ import { ArrowUpRight, ArrowLeft } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Cursor from '@/components/Cursor';
+import Loading from '@/components/Loading';
 import Button from '@/components/common/Button';
 import { Link } from 'react-router-dom';
 import { pageTransition, useAnimationOnView } from '@/utils/animations';
@@ -107,6 +108,9 @@ const Projects = () => {
 
   return (
     <div className="relative">
+      {/* Loading screen with Japanese text */}
+      <Loading />
+      
       {/* Page transition overlay */}
       <div 
         className={`fixed inset-0 bg-background z-50 pointer-events-none transition-opacity duration-1000 ${

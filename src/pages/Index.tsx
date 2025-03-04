@@ -50,19 +50,13 @@ const Index = () => {
       const isLink = target.tagName === 'A' || target.closest('a');
       
       if (isLink && (target as HTMLAnchorElement).hostname === window.location.hostname) {
-        e.preventDefault();
         const href = (target as HTMLAnchorElement).href || (target.closest('a') as HTMLAnchorElement).href;
         
         // Don't transition for hash links (same-page navigation)
         if (href.includes('#') && !href.includes('//')) return;
         
-        // Show transition overlay
-        setIsPageTransitioning(true);
-        
-        // Navigate after transition effect
-        setTimeout(() => {
-          window.location.href = href;
-        }, 800);
+        // Don't prevent default for normal navigation, we'll handle transitions via Loading component
+        // which is rendered on each page
       }
     };
     
@@ -72,15 +66,15 @@ const Index = () => {
 
   return (
     <div className="relative">
+      {/* Loading screen */}
+      <Loading />
+      
       {/* Page transition overlay */}
       <div 
         className={`fixed inset-0 bg-background z-50 pointer-events-none transition-opacity duration-1000 ${
           isPageTransitioning ? 'opacity-100' : 'opacity-0'
         }`} 
       />
-      
-      {/* Loading screen */}
-      <Loading />
       
       {/* Custom cursor */}
       <Cursor />

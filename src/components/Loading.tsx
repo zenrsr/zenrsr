@@ -1,20 +1,25 @@
 
 import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Loading = () => {
   const [progress, setProgress] = useState(0);
   const [hidden, setHidden] = useState(false);
+  
+  // Japanese for "Loading"
+  const loadingText = "読み込み中";
 
   useEffect(() => {
-    // Simulate loading progress
+    // Simulate loading progress with smoother increment
     const interval = setInterval(() => {
       setProgress((prev) => {
-        const next = prev + Math.random() * 10;
+        const increment = Math.random() * 5 + (100 - prev) * 0.05;
+        const next = prev + increment;
         return next > 100 ? 100 : next;
       });
     }, 100);
 
-    // Hide loading screen after completion
+    // Hide loading screen after completion with a delay for smoother transition
     const timeout = setTimeout(() => {
       setHidden(true);
     }, 2500);
@@ -26,18 +31,65 @@ const Loading = () => {
   }, []);
 
   return (
-    <div className={`loading-screen ${hidden ? 'hidden' : ''}`}>
-      <div className="flex flex-col items-center">
-        <div className="text-4xl font-bold mb-6 animate-pulse-soft">Portfolio</div>
-        <div className="w-48 h-1 bg-secondary rounded-full overflow-hidden">
-          <div 
-            className="h-full bg-primary transition-all duration-300 ease-out"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-        <div className="mt-2 text-sm text-muted-foreground">{Math.round(progress)}%</div>
-      </div>
-    </div>
+    <AnimatePresence>
+      {!hidden && (
+        <motion.div 
+          className="fixed inset-0 bg-black z-[9999] flex flex-col items-center justify-center"
+          initial={{ opacity: 1 }}
+          exit={{ 
+            opacity: 0,
+            transition: { 
+              duration: 0.8,
+              ease: [0.16, 1, 0.3, 1] 
+            }
+          }}
+        >
+          <div className="flex flex-col items-center justify-center text-white">
+            <motion.div 
+              className="text-5xl font-light mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ 
+                opacity: 1, 
+                y: 0,
+                transition: { 
+                  duration: 0.6,
+                  ease: [0.16, 1, 0.3, 1],
+                  delay: 0.2
+                }
+              }}
+            >
+              {loadingText}
+            </motion.div>
+            
+            <div className="w-60 relative">
+              <div className="h-px bg-white/20 rounded-full overflow-hidden">
+                <motion.div 
+                  className="h-full bg-white origin-left"
+                  initial={{ scaleX: 0 }}
+                  animate={{ 
+                    scaleX: progress / 100,
+                    transition: { 
+                      duration: 0.4,
+                      ease: [0.16, 1, 0.3, 1]
+                    }
+                  }}
+                />
+              </div>
+              <motion.div 
+                className="absolute right-0 top-2 text-xs text-white/70"
+                initial={{ opacity: 0 }}
+                animate={{ 
+                  opacity: 1,
+                  transition: { delay: 0.4 }
+                }}
+              >
+                {Math.round(progress)}%
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 
