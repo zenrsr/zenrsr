@@ -2,10 +2,19 @@ import { useState } from "react";
 import Button from "./common/Button";
 import { useAnimationOnView } from "@/utils/animations";
 import { Send, Github, Linkedin, Mail, ArrowRight } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 const Footer = () => {
   const { ref, isVisible } = useAnimationOnView(0.1);
   const [emailValue, setEmailValue] = useState("");
+  
+  // Add parallax scroll effect
+  const { scrollYProgress } = useScroll({
+    target: ref as React.RefObject<HTMLElement>,
+    offset: ["start end", "end end"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [100, 0]);
 
   // Social links
   const socialLinks = [
@@ -27,11 +36,16 @@ const Footer = () => {
   };
 
   return (
-    <footer
+    <motion.footer
       id="contact"
       ref={ref as React.RefObject<HTMLElement>}
-      className="py-24 md:py-32 px-6 bg-primary text-primary-foreground"
+      className="py-24 md:py-32 px-6 bg-primary text-primary-foreground relative"
+      style={{ y }}
+      initial={{ y: 100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
     >
+      {/* Rest of your footer content remains the same */}
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           {/* Contact info */}
@@ -144,7 +158,7 @@ const Footer = () => {
           <p>© {new Date().getFullYear()} Portfolio. All rights reserved.</p>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 };
 
