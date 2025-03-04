@@ -194,35 +194,17 @@ export const useScrollRestoration = () => {
     // If URL has hash, scroll to the section after page loads
     if (window.location.hash) {
       const id = window.location.hash.substring(1);
-      // Increased delay for more reliable scrolling after page load
       setTimeout(() => {
         scrollToSection(id);
       }, 200);
     }
 
-    // Improved scroll behavior
-    const smoothScroll = (e: WheelEvent) => {
-      // Only intercept high-velocity scrolls for smoother experience
-      if (Math.abs(e.deltaY) > 60) {
-        e.preventDefault();
-
-        const scrollStep = e.deltaY > 0 ? 100 : -100;
-        window.scrollBy({
-          top: scrollStep,
-          behavior: "smooth",
-        });
-      }
-    };
-
-    // Only apply custom scroll to large displays
-    if (window.innerWidth > 1024) {
-      window.addEventListener("wheel", smoothScroll, { passive: false });
-    }
+    // Set smooth scroll behavior globally
+    document.documentElement.style.scrollBehavior = 'smooth';
 
     return () => {
-      if (window.innerWidth > 1024) {
-        window.removeEventListener("wheel", smoothScroll);
-      }
+      // Reset scroll behavior on cleanup
+      document.documentElement.style.scrollBehavior = '';
     };
   }, []);
 };

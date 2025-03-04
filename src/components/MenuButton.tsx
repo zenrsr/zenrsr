@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { scrollToSection } from "@/utils/animations";
 import { Link } from "react-router-dom";
+import { ArrowUpRight } from "lucide-react";
 
 // Add line animation variants
 const lineVariants = {
@@ -157,6 +158,7 @@ const MenuButton = () => {
                       <span className="relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 group-hover:after:scale-x-100 group-hover:after:origin-bottom-left">
                         {item.label}
                       </span>
+                      <ArrowUpRight className="ml-1 w-4 h-4 transform transition-transform group-hover:translate-x-1 group-hover:translate-y-[-2px]" />
                     </Link>
                   </motion.li>
                 ))}
