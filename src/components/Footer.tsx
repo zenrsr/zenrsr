@@ -198,7 +198,7 @@ const Footer = () => {
 
               <Button
                 type="submit"
-                className="mt-4 bg-white text-primary hover:bg-white/90 cursor-none"
+                className="mt-4 bg-white text-primary hover:bg-white/90"
                 withArrow
                 disabled={isSubmitting}
               >

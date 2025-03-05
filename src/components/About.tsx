@@ -57,7 +57,7 @@ const About = () => {
             <Button
               variant="primary"
               withArrow
-              className="mt-8 hover:scale-105 transform transition-all duration-300 cursor-none"
+              className="mt-8 hover:scale-105 transform transition-all duration-300 "
               onClick={() => window.open("/resume.pdf", "_blank")}
             >
               <p className="flex flex-row items-center justify-center">
