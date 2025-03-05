@@ -1,108 +1,123 @@
-import { useRef, useEffect } from "react";
-import { useAnimationOnView } from "@/utils/animations";
-
-const techStack = {
-  center: { type: 'image', src: '/ai.png', color: "bg-white/20" },
-  orbits: [
-    {
-      radius: 160,
-      speed: 30,
-      technologies: [
-        { type: 'image', src: '/typescript.png', color: "bg-white/20" },
-        { type: 'image', src: '/next.png', color: "bg-white/20" },
-        { type: 'image', src: '/node.png', color: "bg-white/20" },
-      ],
-    },
-    {
-      radius: 240,
-      speed: 45,
-      technologies: [
-        { type: 'image', src: '/mongodb.png', color: "bg-white/20" },
-        { type: 'image', src: '/postgresql.png', color: "bg-white/20" },
-        { type: 'image', src: '/python.png', color: "bg-white/20" },
-      ],
-    },
-    {
-      radius: 320,
-      speed: 60,
-      technologies: [
-        { type: 'image', src: '/aws.png', color: "bg-white/20" },
-        { type: 'image', src: '/docker.png', color: "bg-white/20" },
-        { type: 'image', src: '/git.png', color: "bg-white/20" },
-        { type: 'image', src: '/tailwind.png', color: "bg-white/20" },
-      ],
-    },
-  ],
-};
+import React, { useEffect, useState } from "react";
 
 const TechStack = () => {
-  const { ref, isVisible } = useAnimationOnView(0.1);
-  const orbitRef = useRef<HTMLDivElement>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    if (!isVisible || !orbitRef.current) return;
+    setIsLoaded(true);
+  }, []);
 
-    const orbits = orbitRef.current.querySelectorAll(".orbit");
-    orbits.forEach((orbit, index) => {
-      const speed = techStack.orbits[index].speed;
-      (orbit as HTMLElement).style.animation = `rotate ${speed}s linear infinite`;
-    });
-  }, [isVisible]);
+  const orbits = [
+    { radius: 150, speed: 20, items: 4 }, // Increased from 140
+    { radius: 230, speed: 25, items: 4 }, // Increased from 220
+    { radius: 310, speed: 30, items: 3 }, // Increased from 300
+  ];
+
+  const techItems = [
+    { name: "AI", image: "public/ai.png" },
+    { name: "AWS", image: "public/aws.png" },
+    { name: "Docker", image: "public/docker.png" },
+    { name: "Git", image: "public/git.png" },
+    { name: "MongoDB", image: "public/mongodb.png" },
+    { name: "NextJS", image: "public/next.png" },
+    { name: "NodeJS", image: "public/node.png" },
+    { name: "Python", image: "public/python.png" },
+    { name: "PostgreSQL", image: "public/postgresql.png" },
+    { name: "Typescript", image: "public/typescript.png" },
+    { name: "Tailwind CSS", image: "public/tailwind.png" },
+  ];
 
   return (
-    <section ref={ref as React.RefObject<HTMLDivElement>} className="min-h-screen flex items-center justify-center bg-gradient-to-b from-background to-secondary/20">
-      <div
-        ref={orbitRef}
-        className={`relative w-[800px] h-[800px] transition-all duration-1000 ${
-          isVisible ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        {/* Center AI tech with enhanced hover effect */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center shadow-lg border border-white/20 z-10 hover:scale-110 hover:bg-white/20 transition-all duration-300 group">
-          <img 
-            src={techStack.center.src} 
-            alt="AI"
-            className="w-16 h-16 object-contain group-hover:rotate-12 transition-transform duration-300"
-          />
-        </div>
-
-        {/* Enhanced Orbits with visible paths */}
-        {techStack.orbits.map((orbit, orbitIndex) => (
+    <div className="relative w-full h-screen flex items-center justify-center bg-white overflow-hidden">
+      {/* Orbital Containers */}
+      {orbits.map((orbit, orbitIndex) => (
+        <div
+          key={orbitIndex}
+          className="absolute w-full h-full orbit-container"
+          style={{
+            animationDuration: `${orbit.speed}s`,
+            perspective: "1000px"
+          }}
+        >
           <div
-            key={orbitIndex}
-            className="orbit absolute top-1/2 left-1/2 rounded-full border-[1px] border-white/10"
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
             style={{
-              width: orbit.radius * 2,
-              height: orbit.radius * 2,
-              animation: `rotate ${orbit.speed}s linear infinite`,
-              transform: "translate(-50%, -50%)",
-              boxShadow: "0 0 15px rgba(255, 255, 255, 0.1)",
-              background: "radial-gradient(circle at center, transparent 99%, rgba(255, 255, 255, 0.05) 100%)"
+              width: `${orbit.radius * 2}px`,
+              height: `${orbit.radius * 2}px`,
+              borderRadius: "50%",
+              border: "1px dashed rgba(0, 0, 0, 0.2)"
             }}
-          >
-            {orbit.technologies.map((tech, techIndex) => (
-              <div
-                key={techIndex}
-                className="absolute"
-                style={{
-                  left: "50%",
-                  top: "50%",
-                  transform: `rotate(${(360 / orbit.technologies.length) * techIndex}deg) translateX(${orbit.radius}px) rotate(-${(360 / orbit.technologies.length) * techIndex}deg)`,
-                }}
-              >
-                <div className="p-4 rounded-full bg-white/10 shadow-lg backdrop-blur-md hover:scale-125 hover:bg-white/20 transition-all duration-300 flex items-center justify-center border border-white/20 group cursor-pointer">
-                  <img 
-                    src={tech.src} 
-                    alt="Technology icon" 
-                    className="w-8 h-8 object-contain group-hover:rotate-12 transition-transform duration-300"
-                  />
+          />
+          {techItems
+            .slice(
+              orbitIndex === 0
+                ? 0
+                : orbits
+                    .slice(0, orbitIndex)
+                    .reduce((sum, o) => sum + o.items, 0),
+              orbits
+                .slice(0, orbitIndex + 1)
+                .reduce((sum, o) => sum + o.items, 0)
+            )
+            .map((item, itemIndex) => {
+              const angle = (360 / orbit.items) * itemIndex;
+              return (
+                <div
+                  key={itemIndex}
+                  className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+                    transition-all duration-1000 ${isLoaded ? "opacity-100" : "opacity-0"}`}
+                  style={{
+                    transform: `rotate(${angle}deg) translateX(${orbit.radius}px) rotate(-${angle}deg)`,
+                    transitionDelay: `${orbitIndex * 0.2}s`,
+                  }}
+                >
+                  <div
+                    className="relative w-16 h-16 rounded-full bg-white shadow-lg flex items-center justify-center
+                      hover:scale-110 hover:shadow-xl transition-transform duration-200 will-change-transform tech-item"
+                    style={{
+                      transformStyle: "preserve-3d",
+                      transform: `rotate(-${angle}deg)` // Counter-rotate to keep item upright
+                    }}
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-8 h-8 object-contain"
+                    />
+                    <div
+                      className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0
+    transition-opacity duration-200 bg-black text-white px-2 py-1 rounded-md
+    text-sm whitespace-nowrap hover:opacity-100 tech-tooltip"
+                    >
+                      {item.name}
+                      <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-l-transparent border-r-4 border-r-transparent border-b-4 border-b-black" />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        ))}
+              );
+            })}
+        </div>
+      ))}
+
+      {/* Center Image */}
+      <div
+        className={`relative z-10 w-48 h-48 rounded-full bg-white shadow-xl flex items-center justify-center
+          transition-all duration-500 ${
+            isLoaded ? "scale-100 opacity-100" : "scale-90 opacity-0"
+          }`}
+      >
+        <img
+          src="/ai.png"
+          alt="AI"
+          className="w-32 h-32 object-contain animate-pulse"
+        />
       </div>
-    </section>
+
+      {/* Animated Background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-gray-50/50 to-transparent opacity-50" />
+      </div>
+    </div>
   );
 };
 
