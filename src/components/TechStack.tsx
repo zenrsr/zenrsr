@@ -8,13 +8,13 @@ const TechStack = () => {
   }, []);
 
   const orbits = [
-    { radius: 150, speed: 20, items: 4 }, // Increased from 140
-    { radius: 230, speed: 25, items: 4 }, // Increased from 220
-    { radius: 310, speed: 30, items: 3 }, // Increased from 300
+    { radius: 170, speed: 18, items: 2 },
+    { radius: 220, speed: 22, items: 3 },
+    { radius: 270, speed: 26, items: 2 },
+    { radius: 320, speed: 30, items: 2 },
   ];
 
   const techItems = [
-    { name: "AI", image: "public/ai.png" },
     { name: "AWS", image: "public/aws.png" },
     { name: "Docker", image: "public/docker.png" },
     { name: "Git", image: "public/git.png" },
@@ -36,7 +36,7 @@ const TechStack = () => {
           className="absolute w-full h-full orbit-container"
           style={{
             animationDuration: `${orbit.speed}s`,
-            perspective: "1000px"
+            perspective: "1000px",
           }}
         >
           <div
@@ -45,7 +45,7 @@ const TechStack = () => {
               width: `${orbit.radius * 2}px`,
               height: `${orbit.radius * 2}px`,
               borderRadius: "50%",
-              border: "1px dashed rgba(0, 0, 0, 0.2)"
+              border: "1px dashed rgba(0, 0, 0, 0.2)",
             }}
           />
           {techItems
@@ -76,7 +76,7 @@ const TechStack = () => {
                       hover:scale-110 hover:shadow-xl transition-transform duration-200 will-change-transform tech-item"
                     style={{
                       transformStyle: "preserve-3d",
-                      transform: `rotate(-${angle}deg)` // Counter-rotate to keep item upright
+                      transform: `rotate(-${angle}deg)`, // Counter-rotate to keep item upright
                     }}
                   >
                     <img
