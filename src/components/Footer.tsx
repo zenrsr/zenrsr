@@ -119,7 +119,7 @@ const Footer = () => {
                 <a
                   key={index}
                   href={link.url}
-                  className="flex items-center space-x-2 group interactive"
+                  className="flex items-center space-x-2 group interactive cursor-none"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -151,7 +151,7 @@ const Footer = () => {
                   id="name"
                   value={nameValue}
                   onChange={(e) => setNameValue(e.target.value)}
-                  className="w-full px-4 py-3 bg-primary-foreground/10 border border-primary-foreground/20 rounded-md focus:outline-none focus:ring-2 focus:ring-white/30 text-primary-foreground placeholder:text-primary-foreground/50 transition-all duration-200"
+                  className="w-full px-4 py-3 cursor-none bg-primary-foreground/10 border border-primary-foreground/20 rounded-md focus:outline-none focus:ring-2 focus:ring-white/30 text-primary-foreground placeholder:text-primary-foreground/50 transition-all duration-200"
                   placeholder="Your name"
                   required
                   disabled={isSubmitting}
@@ -170,7 +170,7 @@ const Footer = () => {
                   id="email"
                   value={emailValue}
                   onChange={(e) => setEmailValue(e.target.value)}
-                  className="w-full px-4 py-3 bg-primary-foreground/10 border border-primary-foreground/20 rounded-md focus:outline-none focus:ring-2 focus:ring-white/30 text-primary-foreground placeholder:text-primary-foreground/50 transition-all duration-200"
+                  className="w-full px-4 py-3 cursor-none bg-primary-foreground/10 border border-primary-foreground/20 rounded-md focus:outline-none focus:ring-2 focus:ring-white/30 text-primary-foreground placeholder:text-primary-foreground/50 transition-all duration-200"
                   placeholder="Your email"
                   required
                   disabled={isSubmitting}
@@ -189,7 +189,7 @@ const Footer = () => {
                   rows={4}
                   value={messageValue}
                   onChange={(e) => setMessageValue(e.target.value)}
-                  className="w-full px-4 py-3 bg-primary-foreground/10 border border-primary-foreground/20 rounded-md focus:outline-none focus:ring-2 focus:ring-white/30 text-primary-foreground placeholder:text-primary-foreground/50 transition-all duration-200 resize-none"
+                  className="w-full px-4 py-3 cursor-none bg-primary-foreground/10 border border-primary-foreground/20 rounded-md focus:outline-none focus:ring-2 focus:ring-white/30 text-primary-foreground placeholder:text-primary-foreground/50 transition-all duration-200 resize-none"
                   placeholder="Your message"
                   required
                   disabled={isSubmitting}
@@ -198,7 +198,7 @@ const Footer = () => {
 
               <Button
                 type="submit"
-                className="mt-4 bg-white text-primary hover:bg-white/90"
+                className="mt-4 bg-white text-primary hover:bg-white/90 cursor-none"
                 withArrow
                 disabled={isSubmitting}
               >

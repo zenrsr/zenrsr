@@ -86,7 +86,7 @@ const ProjectsGrid = () => {
             </h2>
             <Link
               to="/projects"
-              className="text-base md:text-lg font-medium mt-4 md:mt-0 inline-flex items-center group"
+              className="text-base md:text-lg font-medium mt-4 md:mt-0 inline-flex items-center group cursor-none"
             >
               <span className="relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 group-hover:after:scale-x-100 group-hover:after:origin-bottom-left">
                 All Projects
@@ -108,7 +108,7 @@ const ProjectsGrid = () => {
           {projects.map((project, index) => (
             <div
               key={project.id}
-              className="project-card opacity-0 transform translate-y-16 transition-all duration-1000 ease-in-expo "
+              className="project-card opacity-0 transform translate-y-16 transition-all duration-1000 ease-in-expo cursor-none"
               onMouseEnter={() => setHoveredProject(project.id)}
               onMouseLeave={() => setHoveredProject(null)}
             >
@@ -119,7 +119,7 @@ const ProjectsGrid = () => {
                 className="block"
               >
                 {/* Project image */}
-                <div className="relative overflow-hidden aspect-[4/3] mb-6 rounded-lg bg-muted">
+                <div className="relative overflow-hidden aspect-[4/3] mb-6 rounded-lg bg-muted cursor-none">
                   <img
                     src={project.image}
                     alt={project.title}
@@ -141,7 +141,7 @@ const ProjectsGrid = () => {
                 </div>
 
                 {/* Project info */}
-                <div className="project-info">
+                <div className="project-info cursor-none">
                   <h3 className="text-xl font-medium mb-2">{project.title}</h3>
                   <p className="text-sm text-muted-foreground">
                     {project.category}
@@ -158,7 +158,7 @@ const ProjectsGrid = () => {
             onClick={() => (window.location.href = "/projects")}
             variant="secondary"
             withArrow
-            className="min-w-[160px]"
+            className="min-w-[160px] cursor-none"
           >
             All Projects
           </Button>

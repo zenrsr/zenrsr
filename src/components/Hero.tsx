@@ -141,7 +141,7 @@ const Hero = () => {
             onClick={() => scrollToSection("projects")}
             size="lg"
             withArrow
-            className="min-w-[160px] "
+            className="min-w-[160px] cursor-none"
           >
             View Projects
           </Button>
@@ -149,7 +149,7 @@ const Hero = () => {
             onClick={() => scrollToSection("about")}
             variant="secondary"
             size="lg"
-            className="min-w-[160px] "
+            className="min-w-[160px] cursor-none"
           >
             About Me
           </Button>
@@ -159,7 +159,7 @@ const Hero = () => {
       {/* Enhanced scroll indicator at the bottom of the hero section */}
       <button
         onClick={handleScrollClick}
-        className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center transition-all duration-1000  group ${
+        className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center transition-all duration-1000 cursor-none group ${
           isLoaded ? "opacity-70" : "opacity-0"
         }`}
         style={{ transitionDelay: "0.8s" }}

@@ -184,7 +184,7 @@ const TechStack = () => {
         <img
           src="/ai.png"
           alt="AI"
-          className={`${getCenterIconSize()} object-contain  relative z-10 `}
+          className={`${getCenterIconSize()} object-contain  relative z-10 cursor-none`}
         />
       </div>
 
