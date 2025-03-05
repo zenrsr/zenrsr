@@ -200,7 +200,6 @@ const Footer = () => {
                 type="submit"
                 className="mt-4 bg-white text-primary hover:bg-white/90 cursor-none"
                 withArrow
-                data-cursor="pointer"
                 disabled={isSubmitting}
               >
                 <p className="flex flex-row items-center justify-center">

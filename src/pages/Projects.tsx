@@ -196,10 +196,7 @@ const Projects = () => {
               ))}
             </div>
 
-            <div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 cursor-none"
-              data-cursor="pointer"
-            >
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 ">
               {filteredProjects.map((project, index) => (
                 <div
                   key={project.id}
@@ -228,15 +225,13 @@ const Projects = () => {
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="cursor-none"
-                        data-cursor="pointer"
+                        className=""
                       >
                         <Button
                           variant="primary"
                           size="sm"
                           withArrow
-                          className="bg-white text-black hover:bg-white/90 cursor-none"
-                          data-cursor="pointer"
+                          className="bg-white text-black hover:bg-white/90 "
                         >
                           View Project
                         </Button>
@@ -246,14 +241,12 @@ const Projects = () => {
                           href={project.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="cursor-none"
-                          data-cursor="pointer"
+                          className=""
                         >
                           <Button
                             variant="secondary"
                             size="sm"
-                            className="bg-white/90 text-black hover:bg-white cursor-none flex items-center gap-2"
-                            data-cursor="pointer"
+                            className="bg-white/90 text-black hover:bg-white  flex items-center gap-2"
                             withArrow
                           >
                             <p className="flex flex-row items-center gap-2 text-sm">

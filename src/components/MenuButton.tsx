@@ -146,14 +146,14 @@ const MenuButton = () => {
                 {navItems.map((item) => (
                   <motion.li
                     key={item.label}
-                    className="interactive cursor-none" // Added cursor-none
+                    className="interactive " // Added
                     whileHover={{ scale: 1.05 }}
                   >
                     <Link
                       to={item.path}
-                      className="text-2xl md:text-3xl font-medium inline-flex items-center group cursor-none" // Added cursor-none
+                      className="text-2xl md:text-3xl font-medium inline-flex items-center group " // Added
                       onClick={() => handleNavClick(item.path, item.section)}
-                      data-cursor="pointer" // Added data attribute for custom cursor
+                      // Added data attribute for custom cursor
                     >
                       <span className="relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 group-hover:after:scale-x-100 group-hover:after:origin-bottom-left">
                         {item.label}

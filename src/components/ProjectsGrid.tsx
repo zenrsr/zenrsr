@@ -108,7 +108,7 @@ const ProjectsGrid = () => {
           {projects.map((project, index) => (
             <div
               key={project.id}
-              className="project-card opacity-0 transform translate-y-16 transition-all duration-1000 ease-in-expo cursor-none"
+              className="project-card opacity-0 transform translate-y-16 transition-all duration-1000 ease-in-expo "
               onMouseEnter={() => setHoveredProject(project.id)}
               onMouseLeave={() => setHoveredProject(null)}
             >
@@ -125,12 +125,11 @@ const ProjectsGrid = () => {
                     alt={project.title}
                     className="w-full h-full object-cover"
                     loading="lazy"
-                    data-cursor="pointer"
                   />
 
                   {/* Overlay on hover */}
                   <div
-                    className={`absolute inset-0 bg-gradient-to-t from-black/50 to-transparent transition-opacity duration-500 cursor-none ${hoveredProject === project.id ? "opacity-100" : "opacity-0"}`}
+                    className={`absolute inset-0 bg-gradient-to-t from-black/50 to-transparent transition-opacity duration-500  ${hoveredProject === project.id ? "opacity-100" : "opacity-0"}`}
                   />
 
                   {/* Hover arrow */}
