@@ -29,6 +29,12 @@ const TechStack = () => {
 
   return (
     <div className="relative w-full h-screen flex items-center justify-center bg-white overflow-hidden">
+      {/* Background Text */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+        <h1 className="text-[20vw] font-bold text-transparent bg-clip-text bg-gradient-to-b from-black/5 to-black/50">
+          Tech Stack
+        </h1>
+      </div>
       {/* Orbital Containers */}
       {orbits.map((orbit, orbitIndex) => (
         <div
@@ -101,15 +107,25 @@ const TechStack = () => {
 
       {/* Center Image */}
       <div
-        className={`relative z-10 w-48 h-48 rounded-full bg-white shadow-xl flex items-center justify-center
-          transition-all duration-500 ${
-            isLoaded ? "scale-100 opacity-100" : "scale-90 opacity-0"
-          }`}
+        className={`relative z-10 w-48 h-48 rounded-full bg-white shadow-xl flex items-center justify-center overflow-hidden cursor-pointer
+          transition-all duration-500 ${isLoaded ? "scale-100 opacity-100" : "scale-90 opacity-0"}`}
+        onClick={(e) => {
+          const rect = e.currentTarget.getBoundingClientRect();
+          const ripple = document.createElement("div");
+          const size = Math.max(rect.width, rect.height);
+          ripple.style.width = ripple.style.height = `${size * 2}px`;
+          ripple.style.left = `${e.clientX - rect.left - size}px`;
+          ripple.style.top = `${e.clientY - rect.top - size}px`;
+          ripple.className =
+            "absolute bg-white/30 rounded-full transform scale-0 pointer-events-none animate-ripple";
+          e.currentTarget.appendChild(ripple);
+          setTimeout(() => ripple.remove(), 1000);
+        }}
       >
         <img
           src="/ai.png"
           alt="AI"
-          className="w-32 h-32 object-contain animate-pulse"
+          className="w-32 h-32 object-contain animate-pulse relative z-10"
         />
       </div>
 
