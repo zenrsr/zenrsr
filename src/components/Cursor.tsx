@@ -63,11 +63,27 @@ const Cursor = () => {
       });
     };
   }, []);
-
   // Only show custom cursor on non-touch devices
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   useEffect(() => {
-    setIsTouchDevice("ontouchstart" in window || navigator.maxTouchPoints > 0);
+    // More reliable touch detection
+    const checkTouchDevice = () => {
+      const hasTouch = Boolean(
+        'ontouchstart' in window ||
+        window.navigator.maxTouchPoints > 0 ||
+        (window.navigator as any).msMaxTouchPoints > 0 ||
+        (window as any).DocumentTouch
+      );
+      // Only set as touch device if it's not a desktop/laptop with touch capabilities
+      const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      );
+      setIsTouchDevice(hasTouch && isMobileDevice);
+    };
+
+    checkTouchDevice();
+    window.addEventListener('resize', checkTouchDevice);
+    return () => window.removeEventListener('resize', checkTouchDevice);
   }, []);
 
   if (isTouchDevice) return null;
