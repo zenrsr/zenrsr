@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Button from "./common/Button";
 import { scrollToSection, useParallaxEffect } from "@/utils/animations";
 import { ArrowDown } from "lucide-react";
+import DecryptedText from "./DecryptedText";
 
 const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -46,7 +47,7 @@ const Hero = () => {
 
   // Handle scroll indicator interaction
   const handleScrollClick = () => {
-    scrollToSection("projects");
+    scrollToSection("tech");
   };
 
   return (
@@ -54,8 +55,22 @@ const Hero = () => {
       id="hero"
       className="relative h-screen flex items-center justify-center overflow-hidden px-6"
     >
+      {/* Background Text */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+        <DecryptedText
+          text="Zenrsr"
+          animateOn="view"
+          speed={80}
+          maxIterations={15}
+          sequential={true}
+          revealDirection="center"
+          className="text-[25vw] font-['Oldex'] bg-clip-text bg-gradient-to-b from-black/70 via-black/80 to-black/90"
+          encryptedClassName="text-[25vw] font-['Oldex'] text-black/40"
+          parentClassName="leading-none"
+        />
+      </div>
       {/* Enhanced parallax background with gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-secondary/10" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-black/10" />
 
       {/* Backdrop blur effect on scroll */}
       <div className="absolute inset-0 backdrop-blur-[1px] opacity-30" />
@@ -126,7 +141,8 @@ const Hero = () => {
             onClick={() => scrollToSection("projects")}
             size="lg"
             withArrow
-            className="min-w-[160px]"
+            className="min-w-[160px] cursor-none"
+            data-cursor="pointer"
           >
             View Projects
           </Button>
@@ -134,7 +150,8 @@ const Hero = () => {
             onClick={() => scrollToSection("about")}
             variant="secondary"
             size="lg"
-            className="min-w-[160px]"
+            className="min-w-[160px] cursor-none"
+            data-cursor="pointer"
           >
             About Me
           </Button>

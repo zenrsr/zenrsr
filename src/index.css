@@ -15,6 +15,14 @@
   font-style: normal;
   font-display: swap;
 }
+
+@font-face {
+  font-family: 'Oldex';
+  src: url('/public/fonts/Oldex.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
  
 @layer base {
   :root {

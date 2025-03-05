@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Github } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Cursor from "@/components/Cursor";
@@ -8,97 +8,78 @@ import Button from "@/components/common/Button";
 import { Link } from "react-router-dom";
 import { useAnimationOnView } from "@/utils/animations";
 
-// Expanded project data for the projects page
+// Project data from ProjectsGrid
 const allProjects = [
   {
     id: 1,
-    title: "CORN-AI PROJECT",
-    category: "AI SAAS Product",
-    image:
-      "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    title: "ROVERAI: YOUR FINANCIAL COPILOT",
+    category: "AI Finance Assistant",
+    image: "/projects/rover.png",
     description:
-      "JavaScript-based AI ecosystem with GPT-4 integration, Stripe payments, and real-time dashboard using Pusher WebSockets. Achieved 95% code reusability.",
-    url: "#",
-    year: "2024",
-    technologies: [
-      "JavaScript",
-      "GPT-4",
-      "Stripe",
-      "Pusher WebSockets",
-      "Node.js",
-    ],
-  },
-  {
-    id: 2,
-    title: "APEXIA FINANCIAL APP",
-    category: "Fintech Application",
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-    description:
-      "Banking app with Plaid API integration, optimized JavaScript algorithms boosting transaction speed by 30%, and Sentry monitoring implementation.",
-    url: "#",
-    year: "2024",
-    technologies: ["JavaScript", "Plaid API", "Sentry", "React", "Node.js"],
-  },
-  {
-    id: 3,
-    title: "PODVERSE AI",
-    category: "Podcast Application",
-    image:
-      "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-    description:
-      "JavaScript/Node.js podcast app with OpenAI Text-to-Speech integration and ClerkJS authentication. Successfully resolved 20+ user-reported issues.",
-    url: "#",
-    year: "2024",
-    technologies: ["Node.js", "OpenAI TTS", "ClerkJS", "React", "MongoDB"],
+      "An intelligent financial assistant powered by AI that helps users manage their investments, track expenses, and make informed financial decisions with real-time market insights.",
+    url: "https://rover-ai-one.vercel.app/",
+    github: "https://github.com/zenrsr/Rover-AI",
+    year: "2025",
+    isRepoPrivate: true,
   },
   {
     id: 4,
     title: "MILAAP WORKSPACE",
     category: "Team Collaboration Platform",
-    image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    image: "/projects/milaap.png",
     description:
       "Slack-inspired platform using WebSockets and GSAP animations. Implemented responsive UI with Spline 3D, improving team efficiency by 25%.",
-    url: "#",
+    url: "https://milaap-three.vercel.app/",
+    github: "https://github.com/zenrsr/milaap",
     year: "2024",
-    technologies: ["WebSocket", "GSAP", "Spline 3D", "React", "Node.js"],
+    isRepoPrivate: false,
+  },
+  {
+    id: 3,
+    title: "PODVERSE AI",
+    category: "Podcast Application: AI Image and Voice Generation",
+    image: "/projects/podverse.png",
+    description:
+      "JavaScript/Node.js podcast app with OpenAI Text-to-Speech integration and ClerkJS authentication. Successfully resolved 20+ user-reported issues.",
+    url: "https://podverse-ai.vercel.app/",
+    github: "https://github.com/zenrsr/podverse-ai",
+    year: "2024",
+    isRepoPrivate: false,
+  },
+  {
+    id: 2,
+    title: "Apple 15",
+    category: "UI/UX Application",
+    image: "/projects/apple.png",
+    description:
+      "3D product visualization website showcasing Apple iPhone 15 features using Three.js and GSAP animations, with responsive design and optimized performance.",
+    url: "https://apple-15.vercel.app/",
+    github: "https://github.com/zenrsr/apple-15",
+    year: "2024",
+    isRepoPrivate: false,
   },
   {
     id: 5,
-    title: "Healthcare Management System",
-    category: "Full Stack Development",
-    image:
-      "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-    url: "#",
-    year: "2021",
+    title: "Corn-AI",
+    category: "AI Chatbot Integration",
+    image: "/projects/corn.png",
+    description:
+      "A chatbot integration with OpenAI's GPT-3.5 model, providing real-time responses to user queries. Implemented with React, TypeScript, and Tailwind CSS.",
+    url: "https://corn-ai-zenrsr.vercel.app",
+    github: "https://github.com/zenrsr/corn-ai-domain",
+    year: "2024",
+    isRepoPrivate: false,
   },
   {
     id: 6,
-    title: "Real Estate Platform",
-    category: "Frontend Development",
-    image:
-      "https://images.unsplash.com/photo-1560520031-3a4dc4e9de0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-    url: "#",
-    year: "2021",
-  },
-  {
-    id: 7,
-    title: "Social Media Analytics",
-    category: "Data Visualization",
-    image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-    url: "#",
-    year: "2020",
-  },
-  {
-    id: 8,
-    title: "Fitness Tracking App",
-    category: "Mobile Development",
-    image:
-      "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-    url: "#",
-    year: "2020",
+    title: "Brainwave",
+    category: "UI/UX Application",
+    image: "/projects/brain.png",
+    description:
+      "A UI/UX design app, showcasing a GSAP parallax visualization and scroll animations.",
+    url: "https://brainrot-green.vercel.app/",
+    github: "https://github.com/zenrsr/dev-ai",
+    isRepoPrivate: false,
   },
 ];
 
@@ -173,7 +154,7 @@ const Projects = () => {
             // Update the page description
             <p className="text-muted-foreground text-lg md:text-xl max-w-2xl">
               A showcase of my latest work in AI, Fintech, and Full Stack
-              Development, demonstrating expertise in JavaScript and modern web
+              Development, demonstrating expertise in TypeScript and modern web
               technologies.
             </p>
           </div>
@@ -215,8 +196,10 @@ const Projects = () => {
               ))}
             </div>
 
-            {/* Projects grid - Lusion.co style */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+            <div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 cursor-none"
+              data-cursor="pointer"
+            >
               {filteredProjects.map((project, index) => (
                 <div
                   key={project.id}
@@ -239,16 +222,47 @@ const Projects = () => {
                     {/* Hover overlay */}
                     <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                    {/* View button on hover */}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        withArrow
-                        className="bg-white text-black hover:bg-white/90"
+                    {/* View and GitHub buttons on hover */}
+                    <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      <a
+                        href={project.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="cursor-none"
+                        data-cursor="pointer"
                       >
-                        View Project
-                      </Button>
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          withArrow
+                          className="bg-white text-black hover:bg-white/90 cursor-none"
+                          data-cursor="pointer"
+                        >
+                          View Project
+                        </Button>
+                      </a>
+                      {!project.isRepoPrivate && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="cursor-none"
+                          data-cursor="pointer"
+                        >
+                          <Button
+                            variant="secondary"
+                            size="sm"
+                            className="bg-white/90 text-black hover:bg-white cursor-none flex items-center gap-2"
+                            data-cursor="pointer"
+                            withArrow
+                          >
+                            <p className="flex flex-row items-center gap-2 text-sm">
+                              <Github className="w-4 h-4" />
+                              Repo
+                            </p>
+                          </Button>
+                        </a>
+                      )}
                     </div>
                   </div>
 

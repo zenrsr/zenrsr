@@ -103,11 +103,10 @@ const MenuButton = () => {
   return (
     <div className="fixed top-0 right-0 z-[60] p-4">
       <motion.button
-        className="flex flex-col items-center justify-center w-12 h-12 relative interactive cursor-none group"
+        className="flex flex-col items-center justify-center w-12 h-12 relative interactive group"
         onClick={() => setIsOpen(!isOpen)}
         animate={isOpen ? "open" : "closed"}
         aria-label={isOpen ? "Close menu" : "Open menu"}
-        data-cursor="pointer"
       >
         <div className="w-12 h-12 flex items-center justify-center relative">
           <motion.div
@@ -147,13 +146,14 @@ const MenuButton = () => {
                 {navItems.map((item) => (
                   <motion.li
                     key={item.label}
-                    className="interactive cursor-none"
+                    className="interactive cursor-none" // Added cursor-none
                     whileHover={{ scale: 1.05 }}
                   >
                     <Link
                       to={item.path}
+                      className="text-2xl md:text-3xl font-medium inline-flex items-center group cursor-none" // Added cursor-none
                       onClick={() => handleNavClick(item.path, item.section)}
-                      className="text-2xl md:text-3xl font-medium inline-flex items-center group"
+                      data-cursor="pointer" // Added data attribute for custom cursor
                     >
                       <span className="relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 group-hover:after:scale-x-100 group-hover:after:origin-bottom-left">
                         {item.label}

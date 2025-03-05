@@ -8,40 +8,44 @@ import Button from "./common/Button";
 const projects = [
   {
     id: 1,
-    title: "CORN-AI PROJECT",
-    category: "AI SAAS Product",
-    image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-    description: "JavaScript-based AI ecosystem with GPT-4 integration, Stripe payments, and real-time dashboard using Pusher WebSockets. Achieved 95% code reusability.",
-    url: "#",
-    year: "2024"
-  },
-  {
-    id: 2,
-    title: "APEXIA FINANCIAL APP",
-    category: "Fintech Application",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-    description: "Banking app with Plaid API integration, optimized JavaScript algorithms boosting transaction speed by 30%, and Sentry monitoring implementation.",
-    url: "#",
-    year: "2024"
-  },
-  {
-    id: 3,
-    title: "PODVERSE AI",
-    category: "Podcast Application",
-    image: "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-    description: "JavaScript/Node.js podcast app with OpenAI Text-to-Speech integration and ClerkJS authentication. Successfully resolved 20+ user-reported issues.",
-    url: "#",
-    year: "2024"
+    title: "ROVERAI: YOUR FINANCIAL COPILOT",
+    category: "AI Finance Assistant",
+    image: "/projects/rover.png",
+    description:
+      "An intelligent financial assistant powered by AI that helps users manage their investments, track expenses, and make informed financial decisions with real-time market insights.",
+    url: "https://rover-ai-one.vercel.app/",
+    year: "2025",
   },
   {
     id: 4,
     title: "MILAAP WORKSPACE",
     category: "Team Collaboration Platform",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-    description: "Slack-inspired platform using WebSockets and GSAP animations. Implemented responsive UI with Spline 3D, improving team efficiency by 25%.",
-    url: "#",
-    year: "2024"
-  }
+    image: "/projects/milaap.png",
+    description:
+      "Slack-inspired platform using WebSockets and GSAP animations. Implemented responsive UI with Spline 3D, improving team efficiency by 25%.",
+    url: "https://milaap-three.vercel.app/",
+    year: "2024",
+  },
+  {
+    id: 3,
+    title: "PODVERSE AI",
+    category: "Podcast Application: AI Image and Voice Generation",
+    image: "/projects/podverse.png",
+    description:
+      "JavaScript/Node.js podcast app with OpenAI Text-to-Speech integration and ClerkJS authentication. Successfully resolved 20+ user-reported issues.",
+    url: "https://podverse-ai.vercel.app/",
+    year: "2024",
+  },
+  {
+    id: 2,
+    title: "Apple 15",
+    category: "UI/UX Application",
+    image: "/projects/apple.png",
+    description:
+      "3D product visualization website showcasing Apple iPhone 15 features using Three.js and GSAP animations, with responsive design and optimized performance.",
+    url: "https://apple-15.vercel.app/",
+    year: "2024",
+  },
 ];
 
 const ProjectsGrid = () => {
@@ -104,45 +108,47 @@ const ProjectsGrid = () => {
           {projects.map((project, index) => (
             <div
               key={project.id}
-              className="project-card opacity-0 transform translate-y-16 transition-all duration-1000 ease-in-expo"
+              className="project-card opacity-0 transform translate-y-16 transition-all duration-1000 ease-in-expo cursor-none"
               onMouseEnter={() => setHoveredProject(project.id)}
               onMouseLeave={() => setHoveredProject(null)}
             >
-              {/* Project image */}
-              <div className="relative overflow-hidden aspect-[4/3] mb-6 rounded-lg bg-muted">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                {/* Project image */}
+                <div className="relative overflow-hidden aspect-[4/3] mb-6 rounded-lg bg-muted">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    data-cursor="pointer"
+                  />
 
-                {/* Overlay on hover */}
-                <div
-                  className={`absolute inset-0 bg-gradient-to-t from-black/50 to-transparent transition-opacity duration-500 ${
-                    hoveredProject === project.id ? "opacity-100" : "opacity-0"
-                  }`}
-                />
+                  {/* Overlay on hover */}
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-t from-black/50 to-transparent transition-opacity duration-500 cursor-none ${hoveredProject === project.id ? "opacity-100" : "opacity-0"}`}
+                  />
 
-                {/* Hover arrow */}
-                <div
-                  className={`absolute right-6 bottom-6 w-12 h-12 bg-white rounded-full flex items-center justify-center transition-all duration-500 ${
-                    hoveredProject === project.id
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-4"
-                  }`}
-                >
-                  <ArrowUpRight className="w-5 h-5 text-black" />
+                  {/* Hover arrow */}
+                  <div
+                    className={`absolute right-6 bottom-6 w-12 h-12 bg-white rounded-full flex items-center justify-center transition-all duration-500 ${hoveredProject === project.id ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+                  >
+                    <ArrowUpRight className="w-5 h-5 text-black" />
+                  </div>
                 </div>
-              </div>
 
-              {/* Project info */}
-              <div className="project-info">
-                <h3 className="text-xl font-medium mb-2">{project.title}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {project.category}
-                </p>
-              </div>
+                {/* Project info */}
+                <div className="project-info">
+                  <h3 className="text-xl font-medium mb-2">{project.title}</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {project.category}
+                  </p>
+                </div>
+              </a>
             </div>
           ))}
         </div>
