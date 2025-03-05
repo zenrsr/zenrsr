@@ -12,15 +12,31 @@ import TechStack from '@/components/TechStack';
 
 const Index = () => {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
-  const [isPageTransitioning, setIsPageTransitioning] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
   
-  // Use the scroll restoration hook to handle hash navigation
   useScrollRestoration();
+  
+  useEffect(() => {
+    // Simulate page transition
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+      // Add smooth scrolling
+      document.documentElement.style.scrollBehavior = "smooth";
+    }, 100);
+  }, []);
   return (
     <>
+      {/* Loading screen */}
+      <Loading />
+      {/* Page transition overlay */}
+      <div
+        className={`fixed inset-0 bg-background z-50 pointer-events-none transition-opacity duration-1000 ${
+          isLoaded ? "opacity-0" : "opacity-100"
+        }`}
+      />
       <Header />
       <Hero />
-      <TechStack /> {/* Add this line */}
+      <TechStack />
       <ProjectsGrid />
       <About />
       <Footer />

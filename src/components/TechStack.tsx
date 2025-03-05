@@ -15,16 +15,16 @@ const TechStack = () => {
   ];
 
   const techItems = [
-    { name: "AWS", image: "public/aws.png" },
-    { name: "Docker", image: "public/docker.png" },
-    { name: "Git", image: "public/git.png" },
-    { name: "MongoDB", image: "public/mongodb.png" },
-    { name: "NextJS", image: "public/next.png" },
-    { name: "NodeJS", image: "public/node.png" },
-    { name: "Python", image: "public/python.png" },
-    { name: "PostgreSQL", image: "public/postgresql.png" },
-    { name: "Typescript", image: "public/typescript.png" },
-    { name: "Tailwind CSS", image: "public/tailwind.png" },
+    { name: "AWS", image: "/aws.png" },
+    { name: "Docker", image: "/docker.png" },
+    { name: "Git", image: "/git.png" },
+    { name: "MongoDB", image: "/mongodb.png" },
+    { name: "NextJS", image: "/next.png" },
+    { name: "NodeJS", image: "/node.png" },
+    { name: "Python", image: "/python.png" },
+    { name: "PostgreSQL", image: "/postgresql.png" },
+    { name: "Typescript", image: "/typescript.png" },
+    { name: "Tailwind CSS", image: "/tailwind.png" },
   ];
 
   return (

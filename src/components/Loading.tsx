@@ -1,11 +1,10 @@
-
-import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Loading = () => {
   const [progress, setProgress] = useState(0);
   const [hidden, setHidden] = useState(false);
-  
+
   // English word with Japanese-style font
   const loadingText = "LOADING";
 
@@ -33,61 +32,61 @@ const Loading = () => {
   return (
     <AnimatePresence>
       {!hidden && (
-        <motion.div 
+        <motion.div
           className="fixed inset-0 bg-black z-[9999] flex flex-col items-center justify-center"
           initial={{ opacity: 1 }}
-          exit={{ 
+          exit={{
             opacity: 0,
-            transition: { 
+            transition: {
               duration: 0.8,
-              ease: [0.16, 1, 0.3, 1] 
-            }
+              ease: [0.16, 1, 0.3, 1],
+            },
           }}
         >
           <div className="flex flex-col items-center justify-center text-white">
-            <motion.div 
+            <motion.div
               className="text-7xl font-bold mb-12 tracking-widest font-brushFont"
               initial={{ opacity: 0, y: 20 }}
-              animate={{ 
-                opacity: 1, 
+              animate={{
+                opacity: 1,
                 y: 0,
-                transition: { 
+                transition: {
                   duration: 0.6,
                   ease: [0.16, 1, 0.3, 1],
-                  delay: 0.2
-                }
+                  delay: 0.2,
+                },
               }}
               style={{
-                textShadow: '0 0 15px rgba(255,255,255,0.5)',
-                letterSpacing: '0.1em',
-                fontFamily: '"Bungee Shade", "Zen Antique", sans-serif',
+                textShadow: "0 0 15px rgba(255,255,255,0.5)",
+                letterSpacing: "0.1em",
+                fontFamily: '"Edo SZ"',
                 fontWeight: 400,
-                transform: 'scale(1, 0.9)'
+                transform: "scale(1, 0.9)",
               }}
             >
               {loadingText}
             </motion.div>
-            
+
             <div className="w-60 relative">
               <div className="h-px bg-white/20 rounded-full overflow-hidden">
-                <motion.div 
+                <motion.div
                   className="h-full bg-white origin-left"
                   initial={{ scaleX: 0 }}
-                  animate={{ 
+                  animate={{
                     scaleX: progress / 100,
-                    transition: { 
+                    transition: {
                       duration: 0.4,
-                      ease: [0.16, 1, 0.3, 1]
-                    }
+                      ease: [0.16, 1, 0.3, 1],
+                    },
                   }}
                 />
               </div>
-              <motion.div 
+              <motion.div
                 className="absolute right-0 top-2 text-xs text-white/70"
                 initial={{ opacity: 0 }}
-                animate={{ 
+                animate={{
                   opacity: 1,
-                  transition: { delay: 0.4 }
+                  transition: { delay: 0.4 },
                 }}
               >
                 {Math.round(progress)}%
