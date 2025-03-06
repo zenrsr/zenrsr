@@ -1,69 +1,101 @@
-# Welcome to your Lovable project
+# Zenrsr Portfolio
 
-## Project info
+A modern, interactive portfolio website showcasing professional work and technical expertise. Built with cutting-edge web technologies and featuring smooth animations, custom cursor effects, and responsive design.
 
-**URL**: https://lovable.dev/projects/1683dbc5-f0b2-408f-9112-631c6194734f
+## Features
 
-## How can I edit this code?
+- 🎨 Custom cursor with interactive hover effects
+- ⚡ Fast page transitions and loading states
+- 🎭 Smooth animations and parallax effects
+- 📱 Fully responsive design
+- 🔄 Interactive tech stack orbit visualization
+- 🎯 Project filtering by year
+- ⌨️ TypeScript for type safety
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+- **Framework:** React with Vite
+- **Styling:** Tailwind CSS + shadcn/ui
+- **Animations:** Locomotive Scroll
+- **Type Safety:** TypeScript
+- **Routing:** React Router
+- **Font Libraries:**
+  - Inter
+  - JetBrains Mono
+  - Bungee Shade
+  - Zen Antique
+  - Edo SZ
+  - Oldex
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/1683dbc5-f0b2-408f-9112-631c6194734f) and start prompting.
+## Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+1. Clone the repository
 
-**Use your preferred IDE**
+```bash
+git clone https://github.com/zenrsr/zenrsr.git
+```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+2. Install dependencies
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+```bash
+cd zenrsr
+npm install
+```
 
-Follow these steps:
+3. Start the development server
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+4. Build for production
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm run build
+```
 
-**Use GitHub Codespaces**
+## Project Structure
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```
+zenrsr/
+├── public/          # Static assets
+│   ├── fonts/       # Custom fonts
+│   └── projects/    # Project images
+├── src/
+│   ├── components/  # React components
+│   ├── hooks/       # Custom React hooks
+│   ├── pages/       # Page components
+│   └── utils/       # Utility functions
+```
 
-## What technologies are used for this project?
+## Key Components
 
-This project is built with .
+- Custom cursor implementation
+- Animated tech stack orbit
+- Project grid with filtering
+- Smooth page transitions
+- Responsive navigation
+- Loading animations
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Performance Optimizations
 
-## How can I deploy this project?
+- Image lazy loading
+- Font optimization with `font-display: swap`
+- Smooth scrolling implementation
+- Optimized animations with GPU acceleration
+- Responsive image loading
 
-Simply open [Lovable](https://lovable.dev/projects/1683dbc5-f0b2-408f-9112-631c6194734f) and click on Share -> Publish.
+## Browser Support
 
-## I want to use a custom domain - is that possible?
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+## License
+
+MIT License - feel free to use this code for your own portfolio!
+
+---
+
+Built with ❤️ by Raga Sandeep Reddy
