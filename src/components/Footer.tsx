@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "./common/Button";
 import { useAnimationOnView } from "@/utils/animations";
-import { Send, Github, Linkedin, Mail, ArrowRight } from "lucide-react";
+import { Send, Github, Linkedin, Mail, ArrowRight, Instagram } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import toast from "react-hot-toast";
 
@@ -32,56 +32,48 @@ const Footer = () => {
       url: "https://www.linkedin.com/in/raga-sandeep-reddy-bobba",
     },
     {
-      icon: <Mail className="h-5 w-5" />,
-      label: "Email",
-      url: "mailto:zenrsrdev@gmail.com",
+      icon: <Instagram className="h-5 w-5" />,
+      label: "Instagram",
+      url: "https://instagram.com/raga.sandeep.reddy",
     },
   ];
-  // Form submission
-  const handleSubmit = async (e: React.FormEvent) => {
+  // Simple form submission - Opens email client with pre-filled content
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const BOT_TOKEN = import.meta.env.TELEGRAM_BOT_TOKEN;
-    const CHAT_ID = import.meta.env.TELEGRAM_CHAT_ID;
-
     try {
-      const message = `
-          New Contact Form Submission
-          ------------------------
-          Name: ${nameValue}
-          Email: ${emailValue}
-          Message: ${messageValue}
-          `;
+      // Create email subject and body
+      const subject = encodeURIComponent(`Portfolio Contact from ${nameValue}`);
+      const body = encodeURIComponent(`Hi Raga,
 
-      const response = await fetch(
-        `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            chat_id: CHAT_ID,
-            text: message,
-            parse_mode: "HTML",
-          }),
-        }
-      );
+My name is ${nameValue} and I'm reaching out through your portfolio.
 
-      if (!response.ok) {
-        throw new Error("Failed to send message");
-      }
+Email: ${emailValue}
 
-      // Reset form
-      setNameValue("");
-      setEmailValue("");
-      setMessageValue("");
+Message:
+${messageValue}
 
-      // Show success toast
-      toast.success("Thanks for your message! I'll get back to you soon.");
+Best regards,
+${nameValue}`);
+
+      // Create mailto link
+      const mailtoLink = `mailto:zenrsrdev@gmail.com?subject=${subject}&body=${body}`;
+
+      // Open email client
+      window.location.href = mailtoLink;
+
+      // Show success message
+      toast.success("Email client opened! Your message is ready to send.");
+
+      // Reset form after a short delay
+      setTimeout(() => {
+        setNameValue("");
+        setEmailValue("");
+        setMessageValue("");
+      }, 1000);
+
     } catch (error) {
-      // Show error toast
       toast.error("Sorry, something went wrong. Please try again later.");
       console.error("Error:", error);
     } finally {
@@ -110,9 +102,9 @@ const Footer = () => {
             </h2>
 
             <p className="text-lg mb-12 text-primary-foreground/80 max-w-lg">
-              Full Stack Generalist specializing in Typescript and modern web
-              technologies. Looking forward to discussing potential
-              collaborations and opportunities.
+              Full Stack Generalist specializing in TypeScript and modern web
+              technologies. Submit the form below to send me an email directly.
+              Looking forward to discussing potential collaborations and opportunities.
             </p>
             <div className="flex flex-col sm:flex-row gap-8">
               {socialLinks.map((link, index) => (
@@ -204,7 +196,7 @@ const Footer = () => {
               >
                 <p className="flex flex-row items-center justify-center">
                   <Send className="mr-2 h-4 w-4" />
-                  {isSubmitting ? "Sending..." : "Send Message"}
+                  {isSubmitting ? "Opening Email..." : "Send Email"}
                 </p>
               </Button>
             </form>
