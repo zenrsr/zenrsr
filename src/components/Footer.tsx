@@ -110,7 +110,7 @@ const Footer = () => {
             </h2>
 
             <p className="text-lg mb-12 text-primary-foreground/80 max-w-lg">
-              Full Stack Generalist specializing in JavaScript and modern web
+              Full Stack Generalist specializing in Typescript and modern web
               technologies. Looking forward to discussing potential
               collaborations and opportunities.
             </p>
